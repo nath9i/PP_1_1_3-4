@@ -12,6 +12,7 @@ import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
 
+    private static final UserDaoJDBCImpl INSTANCE = new UserDaoJDBCImpl();
     private final static String CREATE_UTABLE = "CREATE TABLE IF NOT EXISTS users (" +
             "id BIGINT NOT NULL AUTO_INCREMENT, " +
             "name VARCHAR(40) NOT NULL , " +
@@ -24,10 +25,13 @@ public class UserDaoJDBCImpl implements UserDao {
     private final static String GET_ALL_U = "SELECT * FROM users";
     private final static String CLEAN_UTABLE = "TRUNCATE TABLE users";
 
-    public UserDaoJDBCImpl() {
+    private UserDaoJDBCImpl() {
 
     }
 
+    public static UserDaoJDBCImpl getInstance() {
+        return INSTANCE;
+    }
     public void createUsersTable() {
         try (Statement statement = Util.getConnection().createStatement()) {
             statement.execute(CREATE_UTABLE);
